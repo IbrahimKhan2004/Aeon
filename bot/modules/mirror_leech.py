@@ -318,7 +318,8 @@ async def _mirror_leech(
         return None
 
     if (
-        not is_qbit
+        not is_mega_link(link)
+        and not is_qbit
         and not is_magnet(link)
         and not is_rclone_path(link)
         and not is_gdrive_link(link)
