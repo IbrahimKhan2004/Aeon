@@ -42,6 +42,8 @@ from bot.helper.telegram_helper.message_utils import (
 from bot.helper.mirror_leech_utils.rclone_utils.list import RcloneList
 from bot.helper.mirror_leech_utils.upload_utils.gdriveTools import GoogleDriveHelper
 from bot.helper.mirror_leech_utils.download_utils.gd_download import add_gd_download
+from bot.helper.mirror_leech_utils.download_utils.mega_download import (
+    add_mega_download,
 )
 from bot.helper.mirror_leech_utils.download_utils.qbit_download import add_qb_torrent
 from bot.helper.mirror_leech_utils.download_utils.aria2_download import (
@@ -347,7 +349,7 @@ async def _mirror_leech(
             await delete_message(process_msg)
 
     if not is_leech:
-        if (config_dict["DEFAULT_UPLOAD"] == "rc" and not up) or up == "rc":
+        if config_dict["DEFAULT_UPLOAD"] == "rc" and not up or up == "rc":
             up = config_dict["RCLONE_PATH"]
         if not up and config_dict["DEFAULT_UPLOAD"] == "gd":
             up = "gd"
@@ -434,6 +436,9 @@ async def _mirror_leech(
     elif is_gdrive_link(link):
         await delete_links(message)
         await add_gd_download(link, path, listener, name)
+    elif is_mega_link(link):
+        await delete_links(message)
+        await add_mega_download(link, f"{path}/", listener, name)
     elif is_qbit:
         await add_qb_torrent(link, path, listener, ratio, seed_time)
         LOGGER.info("Downloading with qbitEngine")
