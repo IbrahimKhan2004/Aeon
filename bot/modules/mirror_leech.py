@@ -433,9 +433,6 @@ async def _mirror_leech(
     elif is_gdrive_link(link):
         await delete_links(message)
         await add_gd_download(link, path, listener, name)
-    elif is_mega_link(link):
-        await delete_links(message)
-        await add_mega_download(link, f"{path}/", listener, name)
     elif is_qbit:
         await add_qb_torrent(link, path, listener, ratio, seed_time)
         LOGGER.info("Downloading with qbitEngine")
