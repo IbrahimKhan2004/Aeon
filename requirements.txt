@@ -41,3 +41,6 @@ uv
 uvloop
 xattr
 yt-dlp[default]
+pyrogram
+pyrofork
+pyroblack
