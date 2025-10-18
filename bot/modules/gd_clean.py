@@ -2,7 +2,7 @@
 from pyrogram.handlers import MessageHandler, CallbackQueryHandler
 from pyrogram.filters import command, regex
 
-from bot import bot, LOGGER, OWNER_ID, config_dict
+from bot import LOGGER, OWNER_ID, config_dict
 from bot.helper.telegram_helper.message_utils import (
     sendMessage,
     editMessage,
