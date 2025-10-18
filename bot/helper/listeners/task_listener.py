@@ -644,7 +644,9 @@ class TaskListener(TaskConfig):
                         share_url = f"{INDEX_URL.rstrip('/')}/{quote(self.name)}"
                         buttons.url_button("Index Link", share_url)
                         if mime_type.startswith(("image", "video", "audio")):
-                            share_urls = f"{INDEX_URL.rstrip('/')}/{quote(self.name)}?a=view"
+                            share_urls = (
+                                f"{INDEX_URL.rstrip('/')}/{quote(self.name)}?a=view"
+                            )
                             buttons.url_button("🌐 View Link", share_urls)
                 button = buttons.build_menu(2)
             else:
