@@ -1,6 +1,7 @@
 # ruff: noqa: RUF006
 from asyncio import create_task, gather, sleep
 from html import escape
+from urllib.parse import quote
 
 from aiofiles.os import listdir, makedirs, remove
 from aiofiles.os import path as aiopath
@@ -640,12 +641,10 @@ class TaskListener(TaskConfig):
                     elif Config.INDEX_URL:
                         INDEX_URL = Config.INDEX_URL
                     if INDEX_URL:
-                        share_url = f"{INDEX_URL}/findpath?id={dir_id}"
+                        share_url = f"{INDEX_URL.rstrip('/')}/{quote(self.name)}"
                         buttons.url_button("Index Link", share_url)
                         if mime_type.startswith(("image", "video", "audio")):
-                            share_urls = (
-                                f"{INDEX_URL}/findpath?id={dir_id}&view=true"
-                            )
+                            share_urls = f"{INDEX_URL.rstrip('/')}/{quote(self.name)}?a=view"
                             buttons.url_button("🌐 View Link", share_urls)
                 button = buttons.build_menu(2)
             else:
