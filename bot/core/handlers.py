@@ -8,7 +8,11 @@ from pyrogram.handlers import (
 
 from bot.helper.telegram_helper.bot_commands import BotCommands
 from bot.helper.telegram_helper.filters import CustomFilters
-from bot.modules import *
+from bot.modules import (
+    driveclean,
+    drivecleancb,
+    *
+)
 
 from .aeon_client import TgClient
 
@@ -215,6 +219,11 @@ def add_handlers():
             BotCommands.SoxCommand,
             CustomFilters.authorized,
         ),
+        "driveclean": (
+            driveclean,
+            BotCommands.GDCleanCommand,
+            CustomFilters.owner,
+        ),
     }
 
     for handler_func, command_name, custom_filter in command_filters.values():
@@ -245,6 +254,7 @@ def add_handlers():
         "^status": status_pages,
         "^botrestart": confirm_restart,
         "^aeon": aeon_callback,
+        "^gdclean": drivecleancb,
     }
 
     for regex_filter, handler_func in regex_filters.items():

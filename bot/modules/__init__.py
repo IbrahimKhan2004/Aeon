@@ -8,6 +8,7 @@ from .file_selector import confirm_selection, select
 from .force_start import remove_from_queue
 from .gd_count import count_node
 from .gd_delete import delete_file
+from .gd_clean import driveclean, drivecleancb
 from .gd_search import gdrive_search, select_type
 from .help import arg_usage, bot_help
 from .mediainfo import mediainfo
@@ -59,6 +60,8 @@ __all__ = [
     "confirm_selection",
     "count_node",
     "delete_file",
+    "driveclean",
+    "drivecleancb",
     "edit_bot_settings",
     "edit_user_settings",
     "execute",

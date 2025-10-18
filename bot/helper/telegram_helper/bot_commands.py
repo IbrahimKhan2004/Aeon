@@ -45,3 +45,4 @@ class BotCommands:
     SelectCommand = f"sel{i}"
     RssCommand = f"rss{i}"
     SoxCommand = [f"spectrum{i}", f"sox{i}"]
+    GDCleanCommand = [f"gdclean{i}", f"gc{i}"]

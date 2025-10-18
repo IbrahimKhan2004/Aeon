@@ -4,6 +4,7 @@ from os import path as ospath
 from pickle import load as pload
 from random import randrange
 from re import search as re_search
+from time import sleep
 from urllib.parse import parse_qs, urlparse
 
 from google.oauth2 import service_account
@@ -245,3 +246,29 @@ class GoogleDriveHelper:
             await self.listener.on_upload_error(
                 "your upload has been stopped and uploaded data has been deleted!",
             )
+
+    def driveclean(self, folder_id, trash=False):
+        try:
+            self.service = self.authorize()
+            files = self.get_files_by_folder_id(folder_id)
+            if not files:
+                return f"No files found in GDrive folder with ID: {folder_id}"
+            LOGGER.info(f"Starting to clean GDrive folder: {folder_id}")
+            for file in files:
+                if trash:
+                    self.service.files().update(
+                        fileId=file["id"],
+                        body={"trashed": True},
+                        supportsAllDrives=True,
+                    ).execute()
+                    LOGGER.info(f"Moved to trash: {file['name']}")
+                else:
+                    self.service.files().delete(
+                        fileId=file["id"], supportsAllDrives=True
+                    ).execute()
+                    LOGGER.info(f"Permanently deleted: {file['name']}")
+                sleep(0.5)
+            return f"Successfully cleaned {len(files)} files from GDrive folder."
+        except Exception as e:
+            LOGGER.error(f"Error while cleaning GDrive folder: {e}")
+            return f"Failed to clean GDrive folder. Error: {e}"
